@@ -8,7 +8,7 @@ setuptools.setup(
     version='0.0.0',
     author='Jack S. Edmonds',
     author_email='jack.edmonds@me.com',
-    description='Python machine learning toolkit',
+    description='Python machine learning',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/jsedmonds/pymlearn',
