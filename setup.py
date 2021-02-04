@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as fh:
 
 setuptools.setup(
     name='pymlearn',
-    version='0.0.1',
+    version='0.0.2',
     author='Jack S. Edmonds',
     author_email='jack.edmonds@me.com',
     description='Python machine learning',
