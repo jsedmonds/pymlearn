@@ -61,11 +61,18 @@ def plot_history(history, metric=None, save=False):
                 ax.plot(history[k], color=styler.color(k), linestyle=styler.linestyle(k))
             else:
                 ax2.plot(history[k], color=styler.color(k), linestyle=styler.linestyle(k))
-        ax.set_ylabel('loss', color=styler.colors['loss'])
-        ax2.set_ylabel('accuracy', color=styler.colors['accuracy'])
+        ax.set_ylabel('loss', color=styler.colors['primary'])
+        ax2.set_ylabel('accuracy', color=styler.colors['secondary'])
     ax.set_title('model history')
     ax.set_xlabel('epoch')
-    fig.legend(handles=[Line2D([0], [0], color=styler.colors['default'], linestyle=v, label=k) for k, v in styler.linestyles.items()], loc='center')
+    test_label = 'test'
+    for k in history.keys():
+        if 'val' in k:
+            test_label = 'val'
+            break
+    train = Line2D([0], [0], color=styler.colors['legend'], linestyle=styler.linestyles['train'], label='train')
+    test = Line2D([0], [0], color=styler.colors['legend'], linestyle=styler.linestyles['test'], label=test_label)
+    fig.legend(handles=[train, test], loc='center')
     if save:
         fig.savefig('history.png')
 
@@ -83,10 +90,10 @@ def visualize_network(nodes, activations, save=False):
             top_node_next = max(nodes) / 2 + nodes[i+1] / 2
             num_params += nodes[i] * nodes[i+1] + nodes[i+1]
         for j in np.arange(bot_node, top_node):
-            ax.scatter(i+1, j, color=styler.colors['accuracy'])
+            ax.scatter(i+1, j, color=styler.colors['secondary'])
             if i < len(nodes) - 1:
                 for k in np.arange(bot_node_next, top_node_next):
-                    ax.plot([i+1, i+2], [j, k], color=styler.colors['loss'])
+                    ax.plot([i+1, i+2], [j, k], color=styler.colors['primary'])
     ax.set_title('model architecture')
     ax.set_xlabel(f'{num_params} parameters')
     ax.set_ylabel('input')

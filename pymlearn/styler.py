@@ -1,13 +1,13 @@
 class Styler:
     def __init__(self):
-        self.colors = {'loss': 'C0', 'accuracy': 'C1', 'default': 'C7'}
+        self.colors = {'primary': 'C0', 'secondary': 'C1', 'legend': 'C7'}
         self.linestyles = {'train': '-', 'test': '--'}
     
     def color(self, key):
         if 'loss' in key:
-            return self.colors['loss']
+            return self.colors['primary']
         else:
-            return self.colors['accuracy']
+            return self.colors['secondary']
     
     def linestyle(self, key):
         if 'test' in key or 'val' in key:
