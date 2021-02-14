@@ -59,7 +59,7 @@ def plot_history(history, metric=None, save=False):
         for k, v in history.items():
             if 'loss' in k:
                 ax.plot(history[k], color=styler.color(k), linestyle=styler.linestyle(k))
-            else:
+            elif 'acc' in k:
                 ax2.plot(history[k], color=styler.color(k), linestyle=styler.linestyle(k))
         ax.set_ylabel('loss', color=styler.colors['primary'])
         ax2.set_ylabel('accuracy', color=styler.colors['secondary'])
@@ -68,7 +68,7 @@ def plot_history(history, metric=None, save=False):
     test_label = 'test'
     for k in history.keys():
         if 'val' in k:
-            test_label = 'val'
+            test_label = 'valid'
             break
     train = Line2D([0], [0], color=styler.colors['legend'], linestyle=styler.linestyles['train'], label='train')
     test = Line2D([0], [0], color=styler.colors['legend'], linestyle=styler.linestyles['test'], label=test_label)
@@ -76,7 +76,7 @@ def plot_history(history, metric=None, save=False):
     if save:
         fig.savefig('history.png')
 
-def visualize_network(nodes, activations, save=False):
+def visualize_network(nodes, activations=None, save=False):
     styler = Styler()
     fig, ax = plt.subplots()
     ax2 = ax.twinx()
@@ -98,8 +98,11 @@ def visualize_network(nodes, activations, save=False):
     ax.set_xlabel(f'{num_params} parameters')
     ax.set_ylabel('input')
     ax2.set_ylabel('output')
-    ax.set_xticks(np.arange(2, len(nodes)+1))
-    ax.set_xticklabels(activations)
+    try:
+        ax.set_xticks(np.arange(2, len(nodes)+1))
+        ax.set_xticklabels(activations)
+    except:
+        ax.set_xticks([])
     ax.set_yticks([])
     ax2.set_yticks([])
     if save:
