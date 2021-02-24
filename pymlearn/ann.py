@@ -128,14 +128,16 @@ class ANN:
         self._forward(x)
         p = self._layers[-1]['y']
         if categorical:
-            if p.shape[1] == 1:
+            if anp.ndim(p) == 1:
+                return anp.round(p)
+            elif p.shape[1] == 1:
                 return anp.round(p)
             else:
                 p_cat = anp.zeros_like(p)
                 p_cat[anp.arange(p.shape[0]), anp.argmax(p, axis=1)] = 1
                 return p_cat
         else:
-            return self._layers[-1]['y']
+            return p
     
     def plot(self, metric=None, save=False):
         plot_history(self.history, metric, save)
